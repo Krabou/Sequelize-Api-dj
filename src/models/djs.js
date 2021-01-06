@@ -16,12 +16,17 @@ module.exports = (sequelize, DataTypes) => {
           name: 'club_id',
         },
       });
-      models.Dj.belongsToMany(models.Musicalgenre, {
-        through: "DjMusicalgenres",
+      models.Dj.hasOne(models.DjMusicalgenre, {
         foreignKey: {
-          name: 'musicalgenre_id',
+          name: 'dj_id',
         },
       });
+      // models.Dj.belongsToMany(models.Musicalgenre, {
+      //   through: "DjMusicalgenres",
+      //   foreignKey: {
+      //     name: 'musicalgenre_id',
+      //   },
+      // });
     }
   };
   Djs.init({

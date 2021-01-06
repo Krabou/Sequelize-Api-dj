@@ -19,7 +19,8 @@ const djsController = {
       include: [{
           model: Club
         },
-        Musicalgenre
+        Musicalgenre,
+        
       ]
     })
     return {
