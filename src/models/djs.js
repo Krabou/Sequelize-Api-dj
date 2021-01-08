@@ -16,17 +16,12 @@ module.exports = (sequelize, DataTypes) => {
           name: 'club_id',
         },
       });
-      models.Dj.hasOne(models.DjMusicalgenre, {
+      models.Dj.belongsToMany(models.Musicalgenre, {
+        through: models.DjMusicalgenre,
         foreignKey: {
           name: 'dj_id',
         },
       });
-      // models.Dj.belongsToMany(models.Musicalgenre, {
-      //   through: "DjMusicalgenres",
-      //   foreignKey: {
-      //     name: 'musicalgenre_id',
-      //   },
-      // });
     }
   };
   Djs.init({
@@ -45,7 +40,13 @@ module.exports = (sequelize, DataTypes) => {
     beatport: DataTypes.STRING,
     mixcloud: DataTypes.STRING,
     youtube: DataTypes.STRING,
-    club_id: DataTypes.UUID,
+    club_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'Club',
+        key: 'id'
+      }
+    },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE
   }, {

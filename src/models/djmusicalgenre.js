@@ -11,18 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.DjMusicalgenre.belongsToMany(models.Dj, {
-        through: DjMusicalgenres,
-        foreignKey: {
-          name: 'dj_id',
-        },
-      });
-      models.DjMusicalgenre.belongsToMany(models.Musicalgenre, {
-        through: DjMusicalgenres,
-        foreignKey: {
-          name: 'musicalgenre_id',
-        },
-      });
     }
   };
   DjMusicalgenres.init({
@@ -31,8 +19,22 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    dj_id: DataTypes.UUID,
-    musicalgenre_id: DataTypes.UUID,
+    dj_id: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      references: {
+        model: 'Dj',
+        key: 'id'
+      }
+    },
+    musicalgenre_id: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      references: {
+        model: 'Musicalgenre',
+        key: 'id'
+      }
+    },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE
   }, {

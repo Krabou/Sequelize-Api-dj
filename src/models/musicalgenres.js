@@ -11,10 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Musicalgenre.hasOne(models.DjMusicalgenre, {
-        foreignKey: {
-          name: 'musicalgenre_id',
-        },
+      models.Musicalgenre.belongsToMany(models.Dj, {
+        through: models.DjMusicalgenre,
+        foreignKey: "musicalgenre_id"
       });
     }
   };
@@ -22,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
-      defaultValue:DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4
     },
     name: DataTypes.STRING,
     created_at: DataTypes.DATE,

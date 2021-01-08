@@ -44,7 +44,6 @@ module.exports = {
         type: Sequelize.STRING(1000)
       },
       club_id: {
-        allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: 'Clubs',
@@ -52,11 +51,9 @@ module.exports = {
         }
       },
       created_at: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updated_at: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

@@ -29,7 +29,7 @@ router.post("/", async (request, response) => {
   };
 
   const newDj = await addDj(djToAdd);
-  response.status().json(newDj);
+  response.status(CREATED).json(newDj);
 });
 
 router.get("/:name", async (request, response) => {
