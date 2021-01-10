@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
       models.Dj.belongsToMany(models.Musicalgenre, {
-        through: models.DjMusicalgenre,
+        through: "DjMusicalgenre",
         foreignKey: {
           name: 'dj_id',
         },

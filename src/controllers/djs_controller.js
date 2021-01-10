@@ -84,7 +84,30 @@ const djsController = {
       where: {
         name: name,
       }
-    })
+    });
+    const findThisDj = await Dj.findOne({
+      where: {
+        name: data.name
+      }
+    });
+    const DisplayAllMusicalGenre = await Musicalgenre.findAll();
+const getAllDjMusicalgenre = await DjMusicalgenre.findAll({
+  where: {
+    dj_id: findThisDj.id,
+  }
+});
+console.log("tout les djgenre",getAllDjMusicalgenre)
+    //WE COMPARE THEM IF ITS A MATCH WE ADD A NEW DJMUSICAL THEN WITH THE ID OF DJ AND MUSICALGENRE WE CREATE A NEW DJMUSICALGENRE
+    // data.musical_genres.forEach(musical => {
+    //   for (let i = 0; i < DisplayAllMusicalGenre.length; i++) {
+    //     if (DisplayAllMusicalGenre[i].dataValues.name.toLowerCase() == musical.toLowerCase()) {
+    //       DjMusicalgenre.update({
+    //         dj_id: findThisDj.id,
+    //         musicalgenre_id: DisplayAllMusicalGenre[i].dataValues.id
+    //       })
+    //     }
+    //   }
+    // });
     return {
       updatedDj
     };
