@@ -4,8 +4,13 @@ const {
 
 const musicalGenresController = {
   getAllMusicalGenres: async () => {
-    // Your code here
-    const DisplayAllMusicalGenres = await Musicalgenre.findAll()
+    const DisplayAllMusicalGenres = await Musicalgenre.findAll({
+      attributes: ["name"],
+      order: [
+        ["name", "ASC"]
+      ],
+      raw: true
+    })
     return {
       DisplayAllMusicalGenres
     };

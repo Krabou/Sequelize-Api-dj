@@ -14,15 +14,25 @@ const {
 
 const djsController = {
   getAllDjs: async () => {
-    // Your code here
     const DisplayAllDjs = await Dj.findAll({
+      attributes: {
+        exclude: ["id", "club_id", "created_at", "updated_at"]
+      },
       include: [{
-          model: Club
+          model: Club,
+          attributes: ["name"]
         },
         {
           model: Musicalgenre,
+          attributes: ["name"],
+          through: {
+            attributes: []
+          }
         }
-      ]
+      ],
+      order: [
+        ["name", "ASC"]
+      ],
     })
     return {
       DisplayAllDjs
@@ -30,18 +40,25 @@ const djsController = {
   },
 
   getDj: async (name) => {
-    // Your code here
     const DisplayDjByName = await Dj.findOne({
       where: {
         name: name,
       },
+      attributes: {
+        exclude: ["id", "club_id", "created_at", "updated_at"]
+      },
       include: [{
           model: Club,
+          attributes: ["name"]
         },
         {
           model: Musicalgenre,
+          attributes: ["name"],
+          through: {
+            attributes: []
+          }
         }
-      ]
+      ],
     })
     return {
       DisplayDjByName
@@ -49,8 +66,6 @@ const djsController = {
   },
 
   addDj: async (data) => {
-    // Your code here
-
     //CREATE A NEW DJ
     const NewDj = await Dj.create(data);
 
@@ -79,7 +94,6 @@ const djsController = {
     return NewDj
   },
   updateDj: async (name, data) => {
-    // Your code here
     const updatedDj = await Dj.update(data, {
       where: {
         name: name,
@@ -91,9 +105,9 @@ const djsController = {
       }
     });
     const DisplayAllMusicalGenre = await Musicalgenre.findAll();
-   
+
     //WE COMPARE THEM IF ITS A MATCH WE ADD A NEW DJMUSICAL THEN WITH THE ID OF DJ AND MUSICALGENRE WE CREATE A NEW DJMUSICALGENRE ELSE WE DELETE THEM
- 
+
     data.musical_genres.forEach(musical => {
       for (let i = 0; i < DisplayAllMusicalGenre.length; i++) {
         if (DisplayAllMusicalGenre[i].dataValues.name.toLowerCase() == musical.toLowerCase()) {
@@ -116,19 +130,13 @@ const djsController = {
     };
   },
   deleteDj: async (name) => {
-    // Your code here
     //FIND THE DJ BY NAME
     const thisDj = await Dj.findOne({
       where: {
         name: name
       }
     });
-    //DELETE HIS DJMUSICALGENRE
-    const deletedDjMusicalgenre = await DjMusicalgenre.destroy({
-      where: {
-        dj_id: thisDj.id,
-      },
-    });
+    
     //DELETE HIM
     const deletedDj = await Dj.destroy({
       where: {
